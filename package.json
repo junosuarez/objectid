@@ -1,0 +1,21 @@
+{
+  "name": "objectid",
+  "version": "1.0.0",
+  "description": "generate and validate mongodb objectId strings without dependencies",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AgileDiagnosis/objectid.git"
+  },
+  "keywords": [
+    "mongodb",
+    "objectid"
+  ],
+  "author": "Agile Diagnosis <hello@agilediagnosis.com>",
+  "contributors": ["jden <jason@denizac.org>"],
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
