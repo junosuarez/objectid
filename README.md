@@ -22,6 +22,8 @@ one of the best parts about using objectIds in mongodb is being able to generate
     objectid.isValid('4frsdef43wzx')
     // => false
 
+New in version 1.1, `objectid.isValid` returns true for `mongodb` native driver `ObjectID` objects, or any other representations with a `.toString` method which returns the hex string encoding of a valid objectid.
+
 ## running the tests
 
     $ npm test

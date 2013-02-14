@@ -44,9 +44,12 @@ var makeObjectId = function () {
 
 };
 
-var objIdTest = /^[0-9a-fA-F]{24}$/;
+var objIdPattern = /^[0-9a-fA-F]{24}$/;
 var isValid = function (alleged) {
-  return typeof alleged === 'string' && objIdTest.test(alleged);
+  return (!!alleged &&
+          typeof alleged.toString === 'function' &&
+          objIdPattern.test(alleged.toString())
+        )
 };
 
 module.exports = makeObjectId;
