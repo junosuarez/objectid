@@ -1,3 +1,24 @@
+var ObjectId = function (id) {
+  if (id && id instanceof ObjectId) {
+    return id;
+  }
+  if (!(this instanceof ObjectId)) {
+    return new ObjectId(id);
+  }
+
+  if (id) {
+    id = id.toString()
+    if (isValid(id)) {
+      this.id = id;
+    } else {
+      throw new Error('Invalid ObjectId: ' + id)
+    }
+  } else {
+    this.id = make();
+  }
+
+};
+
 var $3_BITS = 0xFFFFFF;
 var $5_BITS = 0xFFFFFFFFFF;
 
@@ -18,27 +39,6 @@ var pad = function (val, pad) {
     val = '0' + val;
   }
   return val;
-};
-
-var ObjectId = function (id) {
-  if (id && id instanceof ObjectId) {
-    return id;
-  }
-  if (!(this instanceof ObjectId)) {
-    return new ObjectId(id);
-  }
-
-  if (id) {
-    id = id.toString()
-    if (isValid(id)) {
-      this.id = id;
-    } else {
-      throw new Error('Invalid ObjectId: ' + id)
-    }
-  } else {
-    this.id = make();
-  }
-
 };
 
 var make = function () {
@@ -71,6 +71,9 @@ ObjectId.prototype.toString = function () {
 ObjectId.prototype.toJSON = function () {
   return this.id;
 }
+ObjectId.prototype.equals = function (oidB) {
+  return ObjectId.equals(this, oidB)
+}
 
 var objIdPattern = /^[0-9a-fA-F]{24}$/;
 var isValid = function (alleged) {
@@ -79,6 +82,22 @@ var isValid = function (alleged) {
           objIdPattern.test(alleged.toString())
         )
 };
+
+ObjectId.equals = function (oidA, oidB) {
+  if (oidA === oidB) { return true; }
+  if (!oidA || !oidB) { return false }
+  return (oidA.toString() === oidB.toString())
+  return false;
+}
+
+ObjectId.tryParse = function (oid, out, as) {
+  try {
+    out[as] = ObjectId(oid)
+    return true
+  } catch (e) {
+    return false
+  }
+}
 
 module.exports = ObjectId;
 module.exports.isValid = isValid;

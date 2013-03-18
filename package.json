@@ -1,10 +1,10 @@
 {
   "name": "objectid",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "generate and validate mongodb objectId strings without dependencies",
   "main": "index.js",
   "scripts": {
-    "test": "node test"
+    "test": "node node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "mongodb": "~1.2.12",
     "chai": "~1.5.0",
-    "mocha": "~1.8.2"
+    "mocha": "~1.8.2",
+    "chai-interface": "~1.1.0"
   }
 }

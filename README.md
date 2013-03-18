@@ -27,8 +27,27 @@ New in 2.x, this module returns objects with the `_bsontype` property set proper
 
 Calling `objectid` with an existing objectid - whether a string, an object created by this module, an objectid created by another driver (such as the result of a query) - will cast the value to an instanceof this module. It will throw if the argument is not a valid ObjectId.
 
+## Static Methods
+
+ObjectId.equals(oidA, oidB) => Boolean
+
+ObjectId.tryParse(oid, out, as) => Boolean
+
+ObjectId.isValid(oid) => Boolean
+
+## Instance Methods
+
+ObjectId#equals(oidB) => Boolean
+
+ObjectId#toString() => String
+
+ObjectId#toJSON() => String
+
 ## running the tests
 
+From package root:
+
+    $ npm install
     $ npm test
 
 ## contributors
