@@ -20,9 +20,29 @@ var pad = function (val, pad) {
   return val;
 };
 
-var makeObjectId = function () {
+var ObjectId = function (id) {
+  if (id && id instanceof ObjectId) {
+    return id;
+  }
+  if (!(this instanceof ObjectId)) {
+    return new ObjectId(id);
+  }
 
-  /* ObjectIds
+  if (id) {
+    id = id.toString()
+    if (isValid(id)) {
+      this.id = id;
+    } else {
+      throw new Error('Invalid ObjectId: ' + id)
+    }
+  } else {
+    this.id = make();
+  }
+
+};
+
+var make = function () {
+    /* ObjectIds
    * 24 character hex strings of 12 byte objects
    * 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B
    * Timestamp     | Machine   | PID   | Index
@@ -41,8 +61,16 @@ var makeObjectId = function () {
   }, '');
 
   return str;
+}
 
-};
+ObjectId.prototype._bsontype = 'ObjectID';
+ObjectId.prototype.toString = function () {
+  return this.id;
+}
+
+ObjectId.prototype.toJSON = function () {
+  return this.id;
+}
 
 var objIdPattern = /^[0-9a-fA-F]{24}$/;
 var isValid = function (alleged) {
@@ -52,5 +80,5 @@ var isValid = function (alleged) {
         )
 };
 
-module.exports = makeObjectId;
+module.exports = ObjectId;
 module.exports.isValid = isValid;
