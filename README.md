@@ -29,19 +29,19 @@ Calling `objectid` with an existing objectid - whether a string, an object creat
 
 ## Static Methods
 
-ObjectId.equals(oidA, oidB) => Boolean
+### ObjectId.equals(oidA, oidB) => Boolean
 
-ObjectId.tryParse(oid, out, as) => Boolean
+### ObjectId.tryParse(oid, out, as) => Boolean
 
-ObjectId.isValid(oid) => Boolean
+### ObjectId.isValid(oid) => Boolean
 
 ## Instance Methods
 
-ObjectId#equals(oidB) => Boolean
+### ObjectId#equals(oidB) => Boolean
 
-ObjectId#toString() => String
+### ObjectId#toString() => String
 
-ObjectId#toJSON() => String
+### ObjectId#toJSON() => String
 
 ## running the tests
 
