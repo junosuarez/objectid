@@ -91,6 +91,7 @@ ObjectId.equals = function (oidA, oidB) {
 }
 
 ObjectId.tryParse = function (oid, out, as) {
+  if (!isValid(oid)) { return false }
   try {
     out[as] = ObjectId(oid)
     return true

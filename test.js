@@ -124,6 +124,10 @@ describe('objectid', function () {
       out.oid.should.be.instanceof(ObjectId)
       out.oid.toString().should.equal('511083bb08ce6b1b00000003')
     })
+    it('returns false if trying to parse an empty objectId', function () {
+      var out = {}
+      ObjectId.tryParse(undefined, out, 'oid').should.equal(false)
+    })
   })
 
 })
