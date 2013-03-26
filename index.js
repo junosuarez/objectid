@@ -9,13 +9,15 @@ var ObjectId = function (id) {
   if (id) {
     id = id.toString()
     if (isValid(id)) {
-      this.id = id;
+      this.__id = id;
     } else {
       throw new Error('Invalid ObjectId: ' + id)
     }
   } else {
-    this.id = make();
+    this.__id = make();
   }
+
+  this.id = toBinary(this.__id);
 
 };
 
@@ -65,11 +67,11 @@ var make = function () {
 
 ObjectId.prototype._bsontype = 'ObjectID';
 ObjectId.prototype.toString = function () {
-  return this.id;
+  return this.__id;
 }
 
 ObjectId.prototype.toJSON = function () {
-  return this.id;
+  return this.__id;
 }
 ObjectId.prototype.equals = function (oidB) {
   return ObjectId.equals(this, oidB)
@@ -98,6 +100,16 @@ ObjectId.tryParse = function (oid, out, as) {
   } catch (e) {
     return false
   }
+}
+
+
+function toBinary(str) {
+  var i, len, d, result='';
+  for (i = 0, len = str.length; i < len; i += 2) {
+    d = parseInt(str.substr(i, 2), 16);
+    result += String.fromCharCode(d % 256);
+  }
+  return result
 }
 
 module.exports = ObjectId;

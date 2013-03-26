@@ -1,6 +1,6 @@
 {
   "name": "objectid",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "generate and validate mongodb objectId strings without dependencies",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "mongodb": "~1.2.12",
     "chai": "~1.5.0",
     "mocha": "~1.8.2",
-    "chai-interface": "~1.1.0"
+    "chai-interface": "~1.1.0",
+    "bson": "~0.1.8"
   }
 }

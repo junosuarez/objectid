@@ -5,6 +5,7 @@ chai.use(require('chai-interface'))
 
 var ObjectId = require('./index')
 var NativeObjectId = require('mongodb').ObjectID
+var bson = require('bson').BSONPure
 
 var testOid = '511083bb08ce6b1b00000003'
 
@@ -31,10 +32,23 @@ describe('objectid', function () {
     id._bsontype.should.equal('ObjectID');
   })
 
+  it('serializes the same as a bson ObjectID', function () {
+    var id1 = ObjectId(testOid)
+    var id2 = bson.ObjectID(testOid)
+
+    var b1 = bson.BSON.serialize(id1)
+    var b2 = bson.BSON.serialize(id2)
+    // console.log('this', bson.BSON.deserialize(b1))
+    // console.log('real', bson.BSON.deserialize(b2))
+
+    bson.BSON.deserialize(b1).id.should.equal(bson.BSON.deserialize(b2).id)
+
+  })
+
   describe('#toJSON', function () {
     it('JSON serializes to its id string', function () {
-      var id = ObjectId()
-      JSON.stringify(id).should.equal('"' + id.id + '"')
+      var id = ObjectId(testOid)
+      JSON.stringify(id).should.equal('"' + testOid + '"')
     })
   })
 
