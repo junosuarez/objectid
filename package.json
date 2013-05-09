@@ -1,7 +1,7 @@
 {
   "name": "objectid",
-  "version": "2.3.0",
-  "description": "generate and validate mongodb objectId strings without dependencies",
+  "version": "3.0.0",
+  "description": "mongodb objectid utilities",
   "main": "index.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha"

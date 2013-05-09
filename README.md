@@ -1,11 +1,9 @@
 # objectid
-generate and validate mongodb objectId strings without dependencies
+mongodb objectid utilities
 
 ## about
 
-one of the best parts about using objectIds in mongodb is being able to generate them at object creation time, rather than at database insert time. This module is super convenient for code when you don't want the full mongodb driver as a dependency, for example, for use with browserify.
-
-New in 2.x, this module returns objects with the `_bsontype` property set properly to be treated as BSON ObjectIDs, eg, for use in the native driver.
+1.x is probably the version you want to use in a browser. 3.x focuses on compatibility with the npm `mongodb` driver.
 
 ## installation
 
