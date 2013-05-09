@@ -1,98 +1,24 @@
-var ObjectId = function (id) {
-  if (id && id instanceof ObjectId) {
-    return id;
-  }
-  if (!(this instanceof ObjectId)) {
-    return new ObjectId(id);
-  }
+var inherits = require('util').inherits
+var ObjectId = require('bson').ObjectId
+var toString = require('to-string')
 
-  if (id) {
-    id = id.toString()
-    if (isValid(id)) {
-      this.__id = id;
-    } else {
-      throw new Error('Invalid ObjectId: ' + id)
-    }
-  } else {
-    this.__id = make();
-  }
-
-  this.id = toBinary(this.__id);
-
-};
-
-var $3_BITS = 0xFFFFFF;
-var $5_BITS = 0xFFFFFFFFFF;
-
-var MACHINE_ID_AND_PID = Math.round(Math.random() * $5_BITS);
-var index = 0;
-
-var Index = function () {
-  index = index + 1 % $3_BITS;
-  return index;
-};
-
-var Timestamp = function () {
-  return Math.floor((new Date()) / 1000);
-};
-
-var pad = function (val, pad) {
-  while (val.length < pad) {
-    val = '0' + val;
-  }
-  return val;
-};
-
-var make = function () {
-    /* ObjectIds
-   * 24 character hex strings of 12 byte objects
-   * 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B
-   * Timestamp     | Machine   | PID   | Index
-   * Since we're running in a browser, we just use random values
-   * for Machine and PID
-   */
-
-  var groups = [ // [value, padding in hex (bytes * 2)]
-    [Timestamp(), 8],
-    [MACHINE_ID_AND_PID, 10],
-    [Index(), 6]
-  ];
-
-  var str = groups.reduce(function (id, group) {
-    return id + pad(group[0].toString(16), group[1]);
-  }, '');
-
-  return str;
-}
-
-ObjectId.prototype._bsontype = 'ObjectID';
-ObjectId.prototype.toString = function () {
-  return this.__id;
-}
-
-ObjectId.prototype.toJSON = function () {
-  return this.__id;
-}
 ObjectId.prototype.equals = function (oidB) {
-  return ObjectId.equals(this, oidB)
+  return equals(this, oidB)
 }
 
 var objIdPattern = /^[0-9a-fA-F]{24}$/;
 var isValid = function (alleged) {
-  return (!!alleged &&
-          typeof alleged.toString === 'function' &&
-          objIdPattern.test(alleged.toString())
-        )
-};
+  return (!!alleged && objIdPattern.test(toString(alleged)))
+}
 
-ObjectId.equals = function (oidA, oidB) {
+var equals = function (oidA, oidB) {
   if (oidA === oidB) { return true; }
   if (!oidA || !oidB) { return false }
   return (oidA.toString() === oidB.toString())
   return false;
 }
 
-ObjectId.tryParse = function (oid, out, as) {
+var tryParse = function (oid, out, as) {
   if (!isValid(oid)) { return false }
   try {
     out[as] = ObjectId(oid)
@@ -102,15 +28,25 @@ ObjectId.tryParse = function (oid, out, as) {
   }
 }
 
+function Id(id) {
+  if (id instanceof ObjectId) { return id }
+  id = toString(id)
 
-function toBinary(str) {
-  var i, len, d, result='';
-  for (i = 0, len = str.length; i < len; i += 2) {
-    d = parseInt(str.substr(i, 2), 16);
-    result += String.fromCharCode(d % 256);
+  if (id) {
+    if (isValid(id)) {
+      return new ObjectId(id)
+
+    } else {
+      throw new Error('Invalid ObjectId: ' + id)
+    }
+  } else {
+    return new ObjectId()
   }
-  return result
+
 }
 
-module.exports = ObjectId;
+module.exports = Id;
+module.exports.constructor = ObjectId;
+module.exports.tryParse = tryParse;
+module.exports.equals = equals;
 module.exports.isValid = isValid;

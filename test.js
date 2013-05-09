@@ -24,7 +24,6 @@ describe('objectid', function () {
     // instance
     ObjectId().should.be.an('object')
 
-
   })
 
   it('has a bsontype to work with the `bson` module', function () {
@@ -38,8 +37,6 @@ describe('objectid', function () {
 
     var b1 = bson.BSON.serialize(id1)
     var b2 = bson.BSON.serialize(id2)
-    // console.log('this', bson.BSON.deserialize(b1))
-    // console.log('real', bson.BSON.deserialize(b2))
 
     bson.BSON.deserialize(b1).id.should.equal(bson.BSON.deserialize(b2).id)
 
@@ -55,14 +52,14 @@ describe('objectid', function () {
   it('casts native driver ObjectIds', function () {
     var nativeOid = new NativeObjectId()
     var oid = ObjectId(nativeOid)
-    oid.should.be.instanceof(ObjectId)
+    oid.should.be.instanceof(ObjectId.constructor)
     oid.toString().should.equal(nativeOid.toString())
   })
 
   it ('casts itself to itself', function () {
     var oid = ObjectId()
     var oid2 = ObjectId(oid)
-    oid2.should.be.instanceof(ObjectId)
+    oid2.should.be.instanceof(ObjectId.constructor)
     oid.toString().should.equal(oid2.toString())
   })
 
@@ -114,7 +111,6 @@ describe('objectid', function () {
     it('returns true if oidA and oidB are stringwise equal', function () {
       var oidA = ObjectId('511083bb08ce6b1b00000003')
       var oidB = '511083bb08ce6b1b00000003'
-
       ObjectId.equals(oidA, oidB).should.equal(true)
     })
     it('returns false otherwise', function () {
@@ -135,7 +131,7 @@ describe('objectid', function () {
     it('returns true and casts the oid to the out object if possible', function () {
       var out = {}
       ObjectId.tryParse('511083bb08ce6b1b00000003', out, 'oid').should.equal(true)
-      out.oid.should.be.instanceof(ObjectId)
+      out.oid.should.be.instanceof(ObjectId.constructor)
       out.oid.toString().should.equal('511083bb08ce6b1b00000003')
     })
     it('returns false if trying to parse an empty objectId', function () {
