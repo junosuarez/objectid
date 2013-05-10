@@ -138,6 +138,12 @@ describe('objectid', function () {
       var out = {}
       ObjectId.tryParse(undefined, out, 'oid').should.equal(false)
     })
+    it('returns true for a native ObjectId', function () {
+      var out = {}
+      var oid = new NativeObjectId()
+      ObjectId.tryParse(oid, out, 'oid').should.equal(true)
+
+    })
   })
 
 })

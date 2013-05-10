@@ -21,7 +21,7 @@ var equals = function (oidA, oidB) {
 var tryParse = function (oid, out, as) {
   if (!isValid(oid)) { return false }
   try {
-    out[as] = ObjectId(oid)
+    out[as] = Id(oid)
     return true
   } catch (e) {
     return false
