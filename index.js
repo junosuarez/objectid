@@ -12,6 +12,13 @@ var isValid = function (alleged) {
 }
 
 var equals = function (oidA, oidB) {
+  // curried
+  if (arguments.length === 1) {
+    return function (oidB) {
+      return equals(oidA, oidB)
+    }
+  }
+
   if (oidA === oidB) { return true; }
   if (!oidA || !oidB) { return false }
   return (oidA.toString() === oidB.toString())

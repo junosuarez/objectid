@@ -28,6 +28,7 @@ Calling `objectid` with an existing objectid - whether a string, an object creat
 ## Static Methods
 
 ### ObjectId.equals(oidA, oidB) => Boolean
+Curried to support creating equality predicates.
 
 ### ObjectId.tryParse(oid, out, as) => Boolean
 

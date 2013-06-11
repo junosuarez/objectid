@@ -121,6 +121,13 @@ describe('objectid', function () {
       var oidB = oidA
       oidA.equals(oidB).should.equal(true)
     })
+    it('curries arguments', function () {
+      var oidA = ObjectId()
+      var eq = ObjectId.equals(oidA)
+      eq.should.be.a('function')
+      eq('sdfsdf').should.equal(false)
+      eq(oidA).should.equal(true)
+    })
   })
 
   describe('.tryParse', function () {
