@@ -56,7 +56,13 @@ describe('objectid', function () {
     oid.toString().should.equal(nativeOid.toString())
   })
 
-  it ('casts itself to itself', function () {
+  it('generates a new objectId', function () {
+    var oid = ObjectId()
+    oid.should.not.equal(undefined)
+  })
+
+
+  it('casts itself to itself', function () {
     var oid = ObjectId()
     var oid2 = ObjectId(oid)
     oid2.should.be.instanceof(ObjectId.constructor)
@@ -78,6 +84,29 @@ describe('objectid', function () {
   it('throws if called as a cast of an invalid objectid', function () {
     expect(function () {
       var oid = ObjectId('fsodfisohj')
+    }).to.throw(/invalid/i)
+  })
+
+  it('throws when casting falsy values', function () {
+    expect(function () {
+      var id
+      ObjectId(id)
+    }).to.throw(/invalid/i)
+    expect(function () {
+      var id = false
+      ObjectId(id)
+    }).to.throw(/invalid/i)
+    expect(function () {
+      var id = null
+      ObjectId(id)
+    }).to.throw(/invalid/i)
+    expect(function () {
+      var id = ''
+      ObjectId(id)
+    }).to.throw(/invalid/i)
+    expect(function () {
+      var id = 0
+      ObjectId(id)
     }).to.throw(/invalid/i)
   })
 

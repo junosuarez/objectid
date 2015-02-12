@@ -37,17 +37,18 @@ var tryParse = function (oid, out, as) {
 
 function Id(id) {
   if (id instanceof ObjectId) { return id }
+
+  if (arguments.length === 0) {
+    return new ObjectId()
+  }
+
   id = toString(id)
 
-  if (id) {
-    if (isValid(id)) {
-      return new ObjectId(id)
+  if (isValid(id)) {
+    return new ObjectId(id)
 
-    } else {
-      throw new Error('Invalid ObjectId: ' + id)
-    }
   } else {
-    return new ObjectId()
+    throw new Error('Invalid ObjectId: ' + id)
   }
 
 }
