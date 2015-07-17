@@ -5,7 +5,8 @@ chai.use(require('chai-interface'))
 
 var ObjectId = require('./index')
 var NativeObjectId = require('mongodb').ObjectID
-var bson = require('bson').BSONPure
+var bson = require('bson');
+var BSON = new bson.BSONPure.BSON()
 
 var testOid = '511083bb08ce6b1b00000003'
 
@@ -35,10 +36,10 @@ describe('objectid', function () {
     var id1 = ObjectId(testOid)
     var id2 = bson.ObjectID(testOid)
 
-    var b1 = bson.BSON.serialize(id1)
-    var b2 = bson.BSON.serialize(id2)
+    var b1 = BSON.serialize(id1)
+    var b2 = BSON.serialize(id2)
 
-    bson.BSON.deserialize(b1).id.should.equal(bson.BSON.deserialize(b2).id)
+    BSON.deserialize(b1).id.should.equal(BSON.deserialize(b2).id)
 
   })
 
