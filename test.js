@@ -129,6 +129,10 @@ describe('objectid', function () {
       ObjectId.isValid(new NativeObjectId).should.equal(true)
     })
 
+    it('false for 1-element array of ObjectId', function () {
+      ObjectId.isValid([ObjectId()]).should.equal(false)
+    })
+
   })
 
   describe('.equals', function () {
@@ -142,8 +146,9 @@ describe('objectid', function () {
       var oidB = '511083bb08ce6b1b00000003'
       ObjectId.equals(oidA, oidB).should.equal(true)
     })
-    it('returns false otherwise', function () {
+    it('returns false if A or B are not ObjectIds', function () {
       ObjectId.equals('sdfsdfsdfsdf', testOid).should.equal(false)
+      ObjectId.equals('511083bb08ce6b1b00000003', ['511083bb08ce6b1b00000003']).should.equal(false)
     })
     it('is also on ObjectId.prototype', function () {
       var oidA = ObjectId()

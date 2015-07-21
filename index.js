@@ -1,6 +1,4 @@
-var inherits = require('util').inherits
 var ObjectId = require('bson').ObjectId
-var toString = require('to-string')
 
 ObjectId.prototype.equals = function (oidB) {
   return equals(this, oidB)
@@ -8,7 +6,7 @@ ObjectId.prototype.equals = function (oidB) {
 
 var objIdPattern = /^[0-9a-fA-F]{24}$/;
 var isValid = function (alleged) {
-  return (!!alleged && objIdPattern.test(toString(alleged)))
+  return (Boolean(alleged) && !Array.isArray(alleged) && objIdPattern.test(String(alleged)))
 }
 
 var equals = function (oidA, oidB) {
@@ -20,8 +18,8 @@ var equals = function (oidA, oidB) {
   }
 
   if (oidA === oidB) { return true; }
-  if (!oidA || !oidB) { return false }
-  return (oidA.toString() === oidB.toString())
+  if (!isValid(oidA) || !isValid(oidB)) { return false }
+  return (String(oidA) === String(oidB))
   return false;
 }
 
@@ -42,7 +40,7 @@ function Id(id) {
     return new ObjectId()
   }
 
-  id = toString(id)
+  id = String(id)
 
   if (isValid(id)) {
     return new ObjectId(id)
