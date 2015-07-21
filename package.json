@@ -21,13 +21,13 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "mongodb": "~1.2.12",
+    "bson": "~0.1.8",
     "chai": "~1.5.0",
-    "mocha": "~1.8.2",
     "chai-interface": "~1.1.0",
-    "bson": "~0.1.8"
+    "mocha": "~1.8.2",
+    "mongodb": "~1.2.12"
   },
   "dependencies": {
-    "bson": "~0.1.8"
+    "bson": "^0.1.9"
   }
 }
