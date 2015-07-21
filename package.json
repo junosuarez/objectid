@@ -1,6 +1,6 @@
 {
   "name": "objectid",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "mongodb objectid utilities",
   "main": "index.js",
   "scripts": {
