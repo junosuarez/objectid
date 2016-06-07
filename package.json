@@ -28,6 +28,6 @@
     "mongodb": "~1.2.12"
   },
   "dependencies": {
-    "bson": "^0.1.9"
+    "bson": "^0.4.23"
   }
 }
