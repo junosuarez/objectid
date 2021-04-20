@@ -4,8 +4,8 @@ var expect = chai.expect
 chai.use(require('chai-interface'))
 
 var ObjectId = require('./index')
-var NativeObjectId = require('mongodb').ObjectID
-var bson = require('bson').BSONPure
+var BSON = require('bson')
+var bson = BSON.BSONPure
 
 var testOid = '511083bb08ce6b1b00000003'
 
@@ -32,14 +32,13 @@ describe('objectid', function () {
   })
 
   it('serializes the same as a bson ObjectID', function () {
-    var id1 = ObjectId(testOid)
-    var id2 = bson.ObjectID(testOid)
+    var id1 = { objectId: ObjectId(testOid) }
+    var id2 = { objectId: BSON.ObjectID(testOid) }
 
-    var b1 = bson.BSON.serialize(id1)
-    var b2 = bson.BSON.serialize(id2)
+    var b1 = BSON.serialize(id1)
+    var b2 = BSON.serialize(id2)
 
-    bson.BSON.deserialize(b1).id.should.equal(bson.BSON.deserialize(b2).id)
-
+    expect(BSON.deserialize(b1).objectId.id).to.deep.equal(BSON.deserialize(b2).objectId.id);
   })
 
   describe('#toJSON', function () {
@@ -49,12 +48,6 @@ describe('objectid', function () {
     })
   })
 
-  it('casts native driver ObjectIds', function () {
-    var nativeOid = new NativeObjectId()
-    var oid = ObjectId(nativeOid)
-    oid.should.be.instanceof(ObjectId.constructor)
-    oid.toString().should.equal(nativeOid.toString())
-  })
 
   it('generates a new objectId', function () {
     var oid = ObjectId()
@@ -125,10 +118,6 @@ describe('objectid', function () {
       ObjectId.isValid(ObjectId()).should.equal(true)
     })
 
-    it('validates mongo native driver ObjectIds', function () {
-      ObjectId.isValid(new NativeObjectId).should.equal(true)
-    })
-
     it('false for 1-element array of ObjectId', function () {
       ObjectId.isValid([ObjectId()]).should.equal(false)
     })
@@ -178,12 +167,6 @@ describe('objectid', function () {
     it('returns false if trying to parse an empty objectId', function () {
       var out = {}
       ObjectId.tryParse(undefined, out, 'oid').should.equal(false)
-    })
-    it('returns true for a native ObjectId', function () {
-      var out = {}
-      var oid = new NativeObjectId()
-      ObjectId.tryParse(oid, out, 'oid').should.equal(true)
-
     })
   })
 
