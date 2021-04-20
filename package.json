@@ -4,7 +4,7 @@
   "description": "mongodb objectid utilities",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,13 +21,11 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "bson": "~0.1.8",
     "chai": "~1.5.0",
     "chai-interface": "~1.1.0",
-    "mocha": "~1.8.2",
-    "mongodb": "~1.2.12"
+    "mocha": "^8.3.2"
   },
   "dependencies": {
-    "bson": "^0.1.9"
+    "bson": "^4.3.0"
   }
 }
